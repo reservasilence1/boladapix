@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
   <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
 
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" href="/rifa/images/logoboladapix.png" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="shortcut icon" href="/rifa/images/logoboladapix.png" type="image/x-icon" />
     <title>Bolada Pix</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800&display=swap" rel="stylesheet" />
 
     <style>
       * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -394,14 +394,14 @@
         background:#fff;
         display:flex;
         flex-direction:column;
-        gap: 18px;              /* ← distância entre os cards */
+        gap: 18px;
       }
 
       .raspaItem{
         position: relative;
         border: 2px solid #cbd5e1;
-        border-radius: 14px;
-        padding: 22px 16px 18px; /* ← mais respiro interno */
+        border-radius: 16px;
+        padding: 24px 16px 18px;
         background:#fff;
         display:flex;
         align-items:center;
@@ -416,43 +416,46 @@
         background:#fafafa;
       }
 
+      /* ✅ (1) pill menor, mais minimalista, e com MAIS espaço do “A partir de…” */
       .raspaPill{
         position:absolute;
         top:-12px;
-        left:12px;
+        left:14px;
         display:inline-flex;
         align-items:center;
-        gap:10px;               /* ← era 14 */
-        padding:7px 12px;       /* ← um pouco maior */
+        gap:8px;
+        padding:6px 10px;
         border-radius: 999px;
         background:#65a30d;
         color:#fff;
         font-weight: 900;
-        font-size: 12px;
+        font-size: 11px;
         box-shadow: 0 8px 18px rgba(0,0,0,.08);
         white-space: nowrap;
+        letter-spacing: .1px;
       }
       .raspaPill .pillIco{
-        width: 20px;            /* ← era 18 */
-        height: 20px;
-        border-radius: 7px;
-        background: rgba(0,0,0,.15);
+        width: 18px;
+        height: 18px;
+        border-radius: 6px;
+        background: rgba(0,0,0,.14);
         display:flex;
         align-items:center;
         justify-content:center;
         font-weight: 900;
-        font-size: 12px;
+        font-size: 11px;
         line-height:1;
       }
 
       .raspaTxt{
         display:flex;
         flex-direction:column;
-        gap: 8px;               /* ← mais espaço entre título e descrição */
+        gap: 8px;
         min-width: 0;
+        padding-top: 10px; /* ← aumenta a distância do pill pro “A partir de…” */
       }
       .raspaTxt b{
-        font-size: 15px;        /* ← leve aumento */
+        font-size: 15px;
         color:#111827;
         line-height: 1.15;
       }
@@ -464,9 +467,9 @@
       }
 
       .raspaAdd{
-        width: 92px;            /* ← um pouco maior */
+        width: 92px;
         height: 56px;
-        border-radius: 12px;
+        border-radius: 14px;
         border: 1px solid #e5e7eb;
         background:#fff;
         display:flex;
@@ -478,23 +481,248 @@
         flex: 0 0 auto;
       }
 
-      /* ✅ Ajuste fino no mobile (pra ficar igual a referência: “respiro” e sem colar) */
       @media (max-width: 420px){
         .raspaCard{ padding: 14px; gap: 18px; }
-        .raspaItem{
-          padding: 24px 16px 18px;
-          gap: 14px;
-        }
-        .raspaTxt{ gap: 8px; }
+        .raspaItem{ padding: 26px 16px 18px; gap: 14px; }
+        .raspaTxt{ padding-top: 11px; gap: 8px; }
         .raspaTxt b{ font-size: 15px; }
         .raspaTxt small{ font-size: 12px; }
         .raspaAdd{ width: 96px; height: 58px; font-size: 24px; }
+        .raspaPill{ font-size: 11px; padding: 6px 10px; }
       }
-
       @media (max-width: 360px){
         .raspaCard{ gap: 16px; }
-        .raspaItem{ padding: 22px 14px 16px; }
+        .raspaItem{ padding: 24px 14px 16px; }
         .raspaAdd{ width: 92px; height: 56px; font-size: 22px; }
+        .raspaTxt{ padding-top: 11px; }
+      }
+
+      /* =========================
+         ✅ BLOCOS “COTAS PREMIADAS” / “RASPADINHAS PREMIADAS”
+         ========================= */
+      .premWrap{ margin-top: 14px; display:flex; flex-direction:column; gap: 14px; }
+
+      .accCard{
+        background:#fff;
+        border: 1px solid #e5e7eb;
+        border-radius: 14px;
+        overflow:hidden;
+      }
+
+      .accHead{
+        width: 100%;
+        border: 0;
+        background: #fff;
+        padding: 16px 16px;
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+        gap: 12px;
+        cursor:pointer;
+      }
+      .accHeadLeft{ display:flex; align-items:center; gap: 10px; min-width:0; }
+      .accIco{
+        width: 28px; height: 28px;
+        border-radius: 10px;
+        border: 1px solid #e5e7eb;
+        background: #f9fafb;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        flex: 0 0 auto;
+      }
+      .accTitle{
+        font-size: 22px;
+        font-weight: 900;
+        color: #111827;
+        line-height: 1.1;
+        letter-spacing: -0.2px;
+      }
+      .accCaret{
+        width: 22px; height: 22px;
+        color:#111827;
+        transition: transform .18s ease;
+        flex: 0 0 auto;
+      }
+      .accCard.closed .accCaret{ transform: rotate(-90deg); }
+
+      .accBody{
+        padding: 8px 16px 16px;
+        border-top: 1px solid #eef2f7;
+      }
+      .accCard.closed .accBody{ display:none; }
+
+      .accMeta{
+        font-size: 20px;
+        font-weight: 700;
+        color:#9ca3af;
+        margin: 2px 0 12px;
+      }
+
+      .tabsRow{
+        display:grid;
+        grid-template-columns: repeat(3, minmax(0,1fr));
+        gap: 10px;
+        margin-bottom: 12px;
+      }
+      .tabBtn{
+        border-radius: 14px;
+        border: 2px solid #65a30d;
+        background:#fff;
+        padding: 12px 10px;
+        font-size: 20px;
+        font-weight: 800;
+        color:#111827;
+        cursor:pointer;
+        transition: background .12s, border-color .12s;
+        white-space: nowrap;
+      }
+      .tabBtn.on{
+        background:#d1d5db;
+        border-color:#d1d5db;
+        color:#4b5563;
+      }
+
+      .divLine{
+        height: 2px;
+        background:#e5e7eb;
+        margin: 12px 0 12px;
+        opacity:.9;
+      }
+
+      .premList{
+        display:flex;
+        flex-direction:column;
+        gap: 18px;
+      }
+
+      .premItem{
+        border-radius: 16px;
+        padding: 0;
+        background:#fff;
+      }
+
+      .premPrice{
+        font-size: 26px;
+        font-weight: 900;
+        color:#111827;
+        margin: 0 0 8px;
+      }
+
+      .premRow{
+        border-radius: 14px;
+        border: 1px solid #eef2f7;
+        background: #fbfdff;
+        padding: 12px 14px;
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+        gap: 12px;
+      }
+
+      .numRow{
+        display:flex;
+        align-items:center;
+        gap: 10px;
+        min-width: 0;
+        color:#6b7280;
+        font-weight: 800;
+        font-size: 22px;
+      }
+      .numRow span{
+        color:#6b7280;
+        font-weight: 800;
+        letter-spacing: .4px;
+      }
+
+      .badgeOk{
+        min-width: 170px;
+        text-align:center;
+        border-radius: 999px;
+        padding: 10px 14px;
+        background:#7aa65a;
+        color:#fff;
+        font-weight: 900;
+        font-size: 20px;
+        line-height: 1;
+      }
+
+      .badgeOff2{
+        min-width: 170px;
+        text-align:center;
+        border-radius: 999px;
+        padding: 10px 14px;
+        background:#d1d5db;
+        color:#111827;
+        font-weight: 900;
+        font-size: 20px;
+        line-height: 1;
+      }
+
+      .premExtra{
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+        gap: 12px;
+        margin-top: 10px;
+        color:#9ca3af;
+        font-weight: 700;
+        font-size: 18px;
+      }
+
+      .premPrize{
+        font-size: 26px;
+        font-weight: 900;
+        color:#111827;
+        margin: 0 0 8px;
+      }
+
+      .toggleMore{
+        border: 0;
+        background: transparent;
+        margin: 14px auto 2px;
+        display:flex;
+        align-items:center;
+        gap: 10px;
+        cursor:pointer;
+        color:#65a30d;
+        font-weight: 900;
+        font-size: 22px;
+      }
+      .toggleMore .pmIco{
+        width: 30px;
+        height: 30px;
+        border-radius: 10px;
+        background: rgba(101,163,13,.12);
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        color:#65a30d;
+        font-weight: 900;
+        line-height:1;
+        flex: 0 0 auto;
+      }
+
+      @media (max-width: 640px){
+        .accTitle{ font-size: 22px; }
+        .accMeta{ font-size: 18px; }
+        .tabBtn{ font-size: 18px; padding: 12px 10px; }
+        .premPrice{ font-size: 22px; }
+        .premPrize{ font-size: 22px; }
+        .numRow{ font-size: 20px; }
+        .badgeOk, .badgeOff2{ min-width: 150px; font-size: 18px; padding: 9px 12px; }
+        .premExtra{ font-size: 16px; }
+        .toggleMore{ font-size: 20px; }
+      }
+      @media (max-width: 420px){
+        .tabsRow{ gap: 8px; }
+        .tabBtn{ font-size: 16px; border-radius: 14px; }
+        .premRow{ padding: 11px 12px; }
+        .numRow svg{ width: 20px; height: 20px; }
+        .numRow{ font-size: 18px; }
+        .badgeOk, .badgeOff2{ min-width: 132px; font-size: 16px; padding: 9px 10px; }
+        .premPrice{ font-size: 20px; }
+        .premPrize{ font-size: 20px; }
       }
 
       .clienteSec {
@@ -614,30 +842,28 @@
         .wrap { padding-bottom: 140px; }
       }
     </style>
-
   </head>
 
   <body>
+    <script>
+      window.pixelId = "693cab59f3b93a26dfc078ad";
+      var a = document.createElement("script");
+      a.setAttribute("async", "");
+      a.setAttribute("defer", "");
+      a.setAttribute("src", "https://cdn.utmify.com.br/scripts/pixel/pixel.js");
+      document.head.appendChild(a);
+    </script>
 
-<script>
-  window.pixelId = "693cab59f3b93a26dfc078ad";
-  var a = document.createElement("script");
-  a.setAttribute("async", "");
-  a.setAttribute("defer", "");
-  a.setAttribute("src", "https://cdn.utmify.com.br/scripts/pixel/pixel.js");
-  document.head.appendChild(a);
-</script>
-
-<script
-  src="https://cdn.utmify.com.br/scripts/utms/latest.js"
-  data-utmify-prevent-xcod-sck
-  data-utmify-prevent-subids
-  async
-  defer
-></script>
+    <script
+      src="https://cdn.utmify.com.br/scripts/utms/latest.js"
+      data-utmify-prevent-xcod-sck
+      data-utmify-prevent-subids
+      async
+      defer
+    ></script>
 
     <header>
-      <img src="/rifa/images/logoboladapix.png" alt="Logo">
+      <img src="/rifa/images/logoboladapix.png" alt="Logo" />
       <button id="btnMinhas" class="btnTopo2">
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 20 20">
           <path d="M8.75 15.833c3.912 0 7.083-3.171 7.083-7.083 0-3.912-3.171-7.083-7.083-7.083C4.838 1.667 1.667 4.838 1.667 8.75c0 3.912 3.171 7.083 7.083 7.083Z" stroke-width="1.667"></path>
@@ -649,7 +875,7 @@
 
     <div class="wrap">
       <div class="card">
-        <img src="/rifa/images/bannerboladapix.webp" class="banner" alt="Banner">
+        <img src="/rifa/images/bannerboladapix.webp" class="banner" alt="Banner" />
         <div class="faixa">
           <div class="faixaData">
             <span>🍀 Sorteio:</span>
@@ -673,47 +899,26 @@
           <div class="combosGrid">
             <button class="comboBtn" data-combo-qtd="33">
               <span class="comboTitulo">33 Números</span>
-              <span class="comboBonus">
-                <span class="ico">$</span>
-                RECEBE +3 raspadinhas
-              </span>
-              <span class="comboPrecoLinha">
-                <span class="lbl">Por:</span>
-                <span class="comboPrecoValor" data-combo-preco="33">R$ 19,47</span>
-              </span>
+              <span class="comboBonus"><span class="ico">$</span> RECEBE +3 raspadinhas</span>
+              <span class="comboPrecoLinha"><span class="lbl">Por:</span> <span class="comboPrecoValor" data-combo-preco="33">R$ 19,47</span></span>
             </button>
 
             <button class="comboBtn on" data-combo-qtd="66">
               <span class="comboMaisVendido">Mais vendido</span>
               <span class="comboTitulo">66 Números</span>
-              <span class="comboBonus">
-                <span class="ico">$</span>
-                RECEBE +6 raspadinhas
-              </span>
-              <span class="comboPrecoLinha">
-                <span class="lbl">Por:</span>
-                <span class="comboPrecoValor" data-combo-preco="66">R$ 38,94</span>
-              </span>
+              <span class="comboBonus"><span class="ico">$</span> RECEBE +6 raspadinhas</span>
+              <span class="comboPrecoLinha"><span class="lbl">Por:</span> <span class="comboPrecoValor" data-combo-preco="66">R$ 38,94</span></span>
             </button>
 
             <button class="comboBtn" data-combo-qtd="100">
               <span class="comboTitulo">100 Números</span>
-              <span class="comboBonus">
-                <span class="ico">$</span>
-                RECEBE +10 raspadinhas
-              </span>
-              <span class="comboPrecoLinha">
-                <span class="lbl">Por:</span>
-                <span class="comboPrecoValor" data-combo-preco="100">R$ 59,00</span>
-              </span>
+              <span class="comboBonus"><span class="ico">$</span> RECEBE +10 raspadinhas</span>
+              <span class="comboPrecoLinha"><span class="lbl">Por:</span> <span class="comboPrecoValor" data-combo-preco="100">R$ 59,00</span></span>
             </button>
 
             <button class="comboBtn" data-combo-qtd="200">
               <span class="comboTitulo">200 Números</span>
-              <span class="comboBonus">
-                <span class="ico">$</span>
-                RECEBE +20 raspadinhas
-              </span>
+              <span class="comboBonus"><span class="ico">$</span> RECEBE +20 raspadinhas</span>
               <span class="comboOldRow">
                 <span class="comboOld">De: <s>R$ 118,00</s></span>
                 <span class="comboOff">34% OFF</span>
@@ -729,7 +934,7 @@
             <div class="lblQtd">Escolha a quantidade</div>
             <div class="stepper">
               <button class="btSq" id="menos">−</button>
-              <input id="inpQtd" class="inpQtd" type="number" inputmode="numeric" value="66" min="5">
+              <input id="inpQtd" class="inpQtd" type="number" inputmode="numeric" value="66" min="5" />
               <button class="btSq" id="mais">+</button>
             </div>
           </div>
@@ -769,6 +974,83 @@
               </div>
             </div>
           </div>
+
+          <!-- ✅ (2) COTAS PREMIADAS (igual referência) + (5) RASPADINHAS PREMIADAS -->
+          <div class="premWrap">
+            <!-- COTAS PREMIADAS -->
+            <div class="accCard" id="accCotas">
+              <button class="accHead" type="button" data-acc="accCotas">
+                <div class="accHeadLeft">
+                  <div class="accIco" aria-hidden="true">
+                    <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
+                      <path d="M10 1.5l2.3 4.7 5.2.8-3.8 3.7.9 5.2L10 13.6 5.4 15.9l.9-5.2L2.5 7l5.2-.8L10 1.5Z" fill="#111827"/>
+                    </svg>
+                  </div>
+                  <div class="accTitle">Cotas premiadas</div>
+                </div>
+                <svg class="accCaret" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                  <path d="M5 7.5l5 5 5-5" stroke="#111827" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+
+              <div class="accBody">
+                <div class="accMeta" id="cotasMeta">0 disponíveis / 0 totais</div>
+
+                <div class="tabsRow" id="cotasTabs">
+                  <button class="tabBtn on" type="button" data-filter="todas">Todas</button>
+                  <button class="tabBtn" type="button" data-filter="disp">Disponíveis</button>
+                  <button class="tabBtn" type="button" data-filter="comp">Compradas</button>
+                </div>
+
+                <div class="divLine"></div>
+
+                <div class="premList" id="cotasList"></div>
+
+                <button class="toggleMore" id="cotasToggle" type="button">
+                  <span class="pmIco" id="cotasToggleIco">+</span>
+                  <span id="cotasToggleTxt">Ver mais números</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- RASPADINHAS PREMIADAS -->
+            <div class="accCard" id="accRaspasPrem">
+              <button class="accHead" type="button" data-acc="accRaspasPrem">
+                <div class="accHeadLeft">
+                  <div class="accIco" aria-hidden="true" style="background:#f9fafb;">
+                    <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
+                      <rect x="3" y="3" width="14" height="14" rx="3" fill="#111827"/>
+                      <path d="M6.2 10h7.6" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+                      <path d="M10 6.2V13.8" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                  </div>
+                  <div class="accTitle">Raspadinhas premiadas</div>
+                </div>
+                <svg class="accCaret" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                  <path d="M5 7.5l5 5 5-5" stroke="#111827" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+
+              <div class="accBody">
+                <div class="accMeta" id="raspasMeta">0 disponíveis / 0 totais</div>
+
+                <div class="tabsRow" id="raspasTabs">
+                  <button class="tabBtn on" type="button" data-filter="todas">Todas</button>
+                  <button class="tabBtn" type="button" data-filter="disp">Disponíveis</button>
+                  <button class="tabBtn" type="button" data-filter="comp">Compradas</button>
+                </div>
+
+                <div class="divLine"></div>
+
+                <div class="premList" id="raspasList"></div>
+
+                <button class="toggleMore" id="raspasToggle" type="button">
+                  <span class="pmIco" id="raspasToggleIco">+</span>
+                  <span id="raspasToggleTxt">Ver mais números</span>
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
 
         <div class="rodapeCardPc">
@@ -792,7 +1074,7 @@
 
             <div class="mobStepper">
               <button class="mobBt" id="menosMob">−</button>
-              <input id="inpQtdMob" class="mobInp" type="number" inputmode="numeric" value="66" min="5">
+              <input id="inpQtdMob" class="mobInp" type="number" inputmode="numeric" value="66" min="5" />
               <button class="mobBt" id="maisMob">+</button>
             </div>
           </div>
@@ -812,7 +1094,7 @@
         </button>
 
         <div class="clienteLogos">
-          <img src="/rifa/images/logoboladapix.png" alt="Fiote de Sorte">
+          <img src="/rifa/images/logoboladapix.png" alt="Fiote de Sorte" />
         </div>
 
         <div class="clienteContainer">
@@ -873,16 +1155,8 @@
       const VALOR_UNIT_CENT = 59;
       const VALOR_UNIT_DESCONTO_200_CENT = 39;
 
-      const PRECO_POR_QTD_CENT = {
-        33: 1947,
-        66: 3894,
-        100: 5900,
-        200: 7800
-      };
-
-      const PRECO_OLD_POR_QTD_CENT = {
-        200: 11800
-      };
+      const PRECO_POR_QTD_CENT = { 33: 1947, 66: 3894, 100: 5900, 200: 7800 };
+      const PRECO_OLD_POR_QTD_CENT = { 200: 11800 };
 
       const inp = document.getElementById("inpQtd");
       const menos = document.getElementById("menos");
@@ -1065,69 +1339,213 @@
       btnComprar.addEventListener("click", irParaPagamento);
       if (btnComprarMob) btnComprarMob.addEventListener("click", irParaPagamento);
 
-      const lista = document.getElementById("lista");
-      const contagem = document.getElementById("contagem");
-      const tabs = document.querySelectorAll(".tab");
-      const ctrlLista = document.getElementById("ctrlLista");
-      const txtCtrl = document.getElementById("txtCtrl");
-      const icoBtn = document.getElementById("icoBtn");
-      let pool = [];
-      let filtroAtual = "todas";
-      let qtdVisivelBase = 6;
-      let qtdExtra = 0;
-      const maxExtra = 20;
+      /* =========================
+         ✅ ACCORDION + LISTAS (Cotas/Raspadinhas premiadas)
+         ========================= */
 
-      function gerarNumero() {
-        const seis = Math.random() < 0.5;
-        const min = seis ? 100000 : 1000000;
-        const max = seis ? 999999 : 9999999;
-        return String(Math.floor(Math.random() * (max - min + 1)) + min).padStart(6, "0");
-      }
+      // Accordion toggle
+      document.querySelectorAll("[data-acc]").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const id = btn.getAttribute("data-acc");
+          const card = document.getElementById(id);
+          if (!card) return;
+          card.classList.toggle("closed");
+        });
+      });
 
-      function montarPool() {
-        pool = [];
-        for (let i = 0; i < 36; i++) {
-          pool.push({ num: gerarNumero(), status: i % 12 === 0 ? "comp" : "disp", preco: 100000 });
-        }
-      }
+      const ticketIconSvg = `
+        <svg width="22" height="22" viewBox="0 0 20 20" fill="none" stroke="#6B7280" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M3.75 6.667 14.167 2.5 15.833 6.667" stroke-width="1.667" stroke-linejoin="round"></path>
+          <path d="M1.667 6.667H18.333V9.167C17.083 9.167 15.833 10 15.833 11.458c0 1.458 1.25 2.708 2.5 2.708v2.5H1.667v-2.5c1.25 0 2.5-.833 2.5-2.5s-1.25-2.5-2.5-2.5v-2.5Z" stroke-width="1.667" stroke-linejoin="round"></path>
+          <path d="M7.083 10.577H9.583" stroke-width="1.667"></path>
+          <path d="M7.083 13.077h5.833" stroke-width="1.667"></path>
+        </svg>
+      `;
 
-      function dadosFiltrados() {
-        if (filtroAtual === "disp") return pool.filter((x) => x.status === "disp");
-        if (filtroAtual === "comp") return pool.filter((x) => x.status === "comp");
-        return pool.slice();
-      }
-
-      function render() {
-        if (!lista || !contagem) return;
-        const data = dadosFiltrados();
-        const tot = pool.length;
-        const dis = pool.filter((x) => x.status === "disp").length;
-        contagem.textContent = dis + " disponíveis/" + tot + " totais";
-        lista.innerHTML = "";
-        const limite = qtdVisivelBase + qtdExtra;
-        data.slice(0, limite).forEach((it) => {
-          const el = document.createElement("div");
-          el.className = "item";
-          const precoHtml = '<div class="itTop"><span class="precoItem">' + brl(it.preco / 100) + "</span></div>";
-          const statusHtml =
-            it.status === "disp"
-              ? '<span class="badgeOk">Disponível</span>'
-              : '<span class="badgeOff2">Comprada</span>';
-
-          const corpo =
-            '<div style="display:flex;justify-content:space-between;align-items:center"><div class="numRow"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="#6B7280" xmlns="http://www.w3.org/2000/svg"><path d="M3.75 6.667 14.167 2.5 15.833 6.667" stroke-width="1.667" stroke-linejoin="round"></path><path d="M1.667 6.667H18.333V9.167C17.083 9.167 15.833 10 15.833 11.458c0 1.458 1.25 2.708 2.5 2.708v2.5H1.667v-2.5c1.25 0 2.5-.833 2.5-2.5s-1.25-2.5-2.5-2.5v-2.5Z" stroke-width="1.667" stroke-linejoin="round"></path><path d="M7.083 10.577H9.583" stroke-width="1.667"></path><path d="M7.083 13.077h5.833" stroke-width="1.667"></path></svg><span>' +
-            it.num +
-            "</span></div>" +
-            statusHtml +
-            "</div>";
-
-          el.innerHTML = precoHtml + corpo;
-          lista.appendChild(el);
+      function normalizeTabs(tabsWrap, activeFilter) {
+        tabsWrap.querySelectorAll(".tabBtn").forEach((b) => {
+          if (b.getAttribute("data-filter") === activeFilter) b.classList.add("on");
+          else b.classList.remove("on");
         });
       }
 
-      montarPool();
-      render();
+      function createListController(cfg) {
+        const state = {
+          filter: "todas",       // todas | disp | comp
+          expanded: false,
+          baseVisible: cfg.baseVisible || 5
+        };
+
+        function filteredData() {
+          if (state.filter === "disp") return cfg.data.filter((x) => x.status === "disp");
+          if (state.filter === "comp") return cfg.data.filter((x) => x.status === "comp");
+          return cfg.data.slice();
+        }
+
+        function setMeta() {
+          const tot = cfg.data.length;
+          const disp = cfg.data.filter((x) => x.status === "disp").length;
+          const metaEl = document.getElementById(cfg.metaId);
+          if (!metaEl) return;
+          metaEl.textContent = disp + " disponíveis / " + tot + " totais";
+        }
+
+        function setToggle() {
+          const txt = document.getElementById(cfg.toggleTxtId);
+          const ico = document.getElementById(cfg.toggleIcoId);
+          if (!txt || !ico) return;
+
+          const data = filteredData();
+          const needsMore = data.length > state.baseVisible;
+          if (!needsMore) {
+            document.getElementById(cfg.toggleBtnId).style.display = "none";
+            return;
+          }
+          document.getElementById(cfg.toggleBtnId).style.display = "flex";
+
+          if (!state.expanded) {
+            ico.textContent = "+";
+            txt.textContent = "Ver mais números";
+          } else {
+            ico.textContent = "−";
+            txt.textContent = "Ver menos números";
+          }
+        }
+
+        function renderItem(it) {
+          const isComp = it.status === "comp";
+          const badge =
+            it.status === "disp"
+              ? `<span class="badgeOk">Disponível</span>`
+              : `<span class="badgeOff2">Comprado</span>`;
+
+          const prizeTitle = isComp && it.premio ? `<div class="premPrize">${it.premio}</div>` : "";
+          const priceTitle = !isComp ? `<div class="premPrice">${brl(it.preco / 100)}</div>` : `<div class="premPrice">${brl(it.preco / 100)}</div>`;
+
+          const extra =
+            isComp && (it.data || it.nome)
+              ? `<div class="premExtra"><span>${it.data || ""}</span><span>${it.nome || ""}</span></div>`
+              : "";
+
+          return `
+            <div class="premItem">
+              ${prizeTitle}
+              ${priceTitle}
+              <div class="premRow">
+                <div class="numRow">
+                  ${ticketIconSvg}
+                  <span>${it.num}</span>
+                </div>
+                ${badge}
+              </div>
+              ${extra}
+            </div>
+          `;
+        }
+
+        function render() {
+          setMeta();
+
+          const listEl = document.getElementById(cfg.listId);
+          const tabsWrap = document.getElementById(cfg.tabsId);
+          const toggleBtn = document.getElementById(cfg.toggleBtnId);
+
+          if (!listEl || !tabsWrap || !toggleBtn) return;
+
+          normalizeTabs(tabsWrap, state.filter);
+
+          const data = filteredData();
+          const limit = state.expanded ? data.length : Math.min(state.baseVisible, data.length);
+
+          listEl.innerHTML = data.slice(0, limit).map(renderItem).join("");
+
+          setToggle();
+        }
+
+        // tabs
+        const tabsWrap = document.getElementById(cfg.tabsId);
+        if (tabsWrap) {
+          tabsWrap.querySelectorAll(".tabBtn").forEach((b) => {
+            b.addEventListener("click", () => {
+              state.filter = b.getAttribute("data-filter") || "todas";
+              // mantém expand/recolhe como no exemplo: ao trocar, começa recolhido
+              state.expanded = false;
+              render();
+            });
+          });
+        }
+
+        // toggle more
+        const toggleBtn = document.getElementById(cfg.toggleBtnId);
+        if (toggleBtn) {
+          toggleBtn.addEventListener("click", () => {
+            state.expanded = !state.expanded;
+            render();
+          });
+        }
+
+        render();
+        return { render };
+      }
+
+      // ✅ Dados para ficar no estilo da referência (9 disponíveis / 11 totais; expand mostra inclusive os 2 comprados)
+      const cotasData = [
+        { num: "0610461", status: "disp", preco: 50000 },
+        { num: "1801045", status: "disp", preco: 50000 },
+        { num: "1826113", status: "disp", preco: 50000 },
+        { num: "2478217", status: "disp", preco: 50000 },
+        { num: "2610695", status: "disp", preco: 50000 },
+        { num: "4144232", status: "disp", preco: 50000 },
+        { num: "4361503", status: "disp", preco: 50000 },
+        { num: "6988486", status: "disp", preco: 50000 },
+        { num: "9188245", status: "disp", preco: 50000 },
+        // comprados (aparecem ao expandir, e no filtro "Compradas")
+        { num: "2233113", status: "comp", preco: 50000, premio: "Iphone 17 Pro Max", data: "03/01/2026 09:54", nome: "Edivania T********" },
+        { num: "0024116", status: "comp", preco: 50000, data: "04/01/2026 18:05", nome: "Antônio C****" }
+      ];
+
+      const raspasPremData = [
+        { num: "1054507", status: "disp", preco: 100000 },
+        { num: "1780452", status: "disp", preco: 100000 },
+        { num: "2896196", status: "disp", preco: 100000 },
+        { num: "7975151", status: "disp", preco: 100000 },
+        { num: "8049492", status: "disp", preco: 100000 },
+        { num: "9112041", status: "disp", preco: 100000 },
+        { num: "2287710", status: "disp", preco: 100000 },
+        { num: "5500123", status: "disp", preco: 100000 },
+        { num: "6001239", status: "disp", preco: 100000 },
+        // compradas
+        { num: "0198871", status: "comp", preco: 100000, data: "02/01/2026 11:21", nome: "Juliana M******" },
+        { num: "7781204", status: "comp", preco: 100000, data: "04/01/2026 20:10", nome: "Carlos R*****" }
+      ];
+
+      // Controllers
+      createListController({
+        data: cotasData,
+        metaId: "cotasMeta",
+        tabsId: "cotasTabs",
+        listId: "cotasList",
+        toggleBtnId: "cotasToggle",
+        toggleTxtId: "cotasToggleTxt",
+        toggleIcoId: "cotasToggleIco",
+        baseVisible: 5
+      });
+
+      createListController({
+        data: raspasPremData,
+        metaId: "raspasMeta",
+        tabsId: "raspasTabs",
+        listId: "raspasList",
+        toggleBtnId: "raspasToggle",
+        toggleTxtId: "raspasToggleTxt",
+        toggleIcoId: "raspasToggleIco",
+        baseVisible: 5
+      });
+
+      // (opcional) deixar as contagens como nas imagens (sem mexer na lista):
+      // — Se você quiser EXATAMENTE “455 disponíveis / 611 totais” igual print, descomente:
+      // document.getElementById("raspasMeta").textContent = "455 disponíveis / 611 totais";
+
     </script>
   </body>
 </html>
