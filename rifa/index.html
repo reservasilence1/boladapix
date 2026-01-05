@@ -138,39 +138,102 @@
       .comboBtn {
         position: relative;
         width: 100%;
-        border-radius: 10px;
-        padding: 10px 12px;
-        border: 1px solid #cbd5e1;
+        border-radius: 12px;
+        padding: 12px 12px;
+        border: 2px solid #cbd5e1;
         background: #ffffff;
         text-align: left;
         cursor: pointer;
         display: flex;
         flex-direction: column;
         justify-content: center;
-        gap: 4px;
+        gap: 6px;
         transition: border-color 0.15s, box-shadow 0.15s, background 0.15s;
+        min-height: 88px;
       }
 
-      .comboTitulo { display: block; font-size: 15px; font-weight: 800; color: #374151; }
-      .comboPrecoLinha { display: block; font-size: 13px; color: #4b5563; font-weight: 600; }
-      .comboPrecoValor { display: inline; font-weight: 800; color: #374151; }
+      .comboTitulo { display: block; font-size: 16px; font-weight: 800; color: #111827; }
 
-      .comboMaisVendido {
-        position: absolute;
-        top: -13px;
-        left: 12px;
-        padding: 4px 10px;
-        border-radius: 999px;
-        background: #1d4ed8;
-        color: #ffffff;
+      .comboBonus {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
         font-size: 11px;
+        font-weight: 800;
+        color: #166534;
+        opacity: .95;
+      }
+      .comboBonus .ico {
+        width: 16px;
+        height: 16px;
+        border-radius: 4px;
+        background: #16a34a;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        font-size: 11px;
+        line-height: 1;
+      }
+
+      .comboPrecoLinha {
+        display: block;
+        font-size: 13px;
+        color: #374151;
         font-weight: 700;
       }
+      .comboPrecoLinha .lbl { font-weight: 700; color: #374151; }
+      .comboPrecoValor { display: inline; font-weight: 900; color: #111827; }
 
+      /* “Mais vendido” igual referência (faixa vermelha) */
+      .comboMaisVendido {
+        position: absolute;
+        top: -14px;
+        left: 50%;
+        transform: translateX(-50%);
+        padding: 5px 12px;
+        border-radius: 999px;
+        background: #b91c1c;
+        color: #ffffff;
+        font-size: 11px;
+        font-weight: 900;
+        box-shadow: 0 6px 16px rgba(0,0,0,.12);
+        white-space: nowrap;
+      }
+
+      /* Selecionado: tom verde claro como na foto */
       .comboBtn.on {
-        border-color: #2563eb;
-        background: #e0edff;
-        box-shadow: 0 0 0 1px #bfdbfe;
+        border-color: #6aa84f;
+        background: #eef7ea;
+        box-shadow: 0 0 0 1px rgba(106,168,79,.35);
+      }
+
+      /* Card 200 com “34% OFF” e preço antigo */
+      .comboOldRow{
+        display:flex;
+        align-items:center;
+        gap:8px;
+        margin-top: -2px;
+      }
+      .comboOld {
+        font-size: 12px;
+        color: #6b7280;
+        font-weight: 800;
+      }
+      .comboOld s { color:#6b7280; }
+      .comboOff {
+        font-size: 11px;
+        font-weight: 900;
+        color: #166534;
+        background: #dcfce7;
+        border: 1px solid #bbf7d0;
+        padding: 3px 8px;
+        border-radius: 999px;
+      }
+      .comboPorApenas{
+        font-size: 12px;
+        color: #166534;
+        font-weight: 900;
       }
 
       @media (max-width: 480px) {
@@ -245,7 +308,7 @@
       .resTxt { font-size: 13px; color: #4b5563; font-weight: 600; }
 
       .precos { display: flex; flex-direction: column; gap: 2px; }
-      .precoOld { color: #dc2626; text-decoration: line-through; font-size: 12px; display: none; }
+      .precoOld { color: #6b7280; text-decoration: line-through; font-size: 12px; display: none; }
 
       .precoNew { color: #111827; font-size: 20px; font-weight: 800; }
       @media (max-width: 420px) { .precoNew { font-size: 18px; } }
@@ -282,6 +345,123 @@
       .toast.show {
         opacity: 1;
         transform: translateX(-50%) translateY(-4px);
+      }
+
+      /* ====== Raspadinha da Sorte (layout igual referência) ====== */
+      .raspaWrap{
+        margin-top: 14px;
+      }
+      .raspaTitulo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin: 18px 0 10px;
+      }
+      .raspaFlag{
+        width: 18px;
+        height: 18px;
+        border-radius: 4px;
+        background: #166534;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        color:#fff;
+        font-weight:900;
+        font-size:12px;
+      }
+      .raspaTitulo h3{
+        font-size: 18px;
+        font-weight: 900;
+        color: #111827;
+      }
+
+      .raspaCard{
+        border: 1px solid #e5e7eb;
+        border-radius: 14px;
+        padding: 12px;
+        background:#fff;
+        display:flex;
+        flex-direction:column;
+        gap: 12px;
+      }
+
+      .raspaItem{
+        position: relative;
+        border: 2px solid #cbd5e1;
+        border-radius: 14px;
+        padding: 18px 14px 16px;
+        background:#fff;
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+        gap: 14px;
+        cursor:pointer;
+        transition: border-color .15s, background .15s, box-shadow .15s, transform .06s;
+      }
+      .raspaItem:active{ transform: scale(.99); }
+      .raspaItem:hover{
+        border-color:#9ca3af;
+        background:#fafafa;
+      }
+
+      .raspaPill{
+        position:absolute;
+        top:-12px;
+        left:12px;
+        display:inline-flex;
+        align-items:center;
+        gap:8px;
+        padding:6px 12px;
+        border-radius: 999px;
+        background:#65a30d;
+        color:#fff;
+        font-weight: 900;
+        font-size: 12px;
+        box-shadow: 0 8px 18px rgba(0,0,0,.08);
+        white-space: nowrap;
+      }
+      .raspaPill .pillIco{
+        width: 18px;
+        height: 18px;
+        border-radius: 6px;
+        background: rgba(0,0,0,.15);
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        font-weight: 900;
+        font-size: 12px;
+        line-height:1;
+      }
+
+      .raspaTxt{
+        display:flex;
+        flex-direction:column;
+        gap: 4px;
+        min-width: 0;
+      }
+      .raspaTxt b{
+        font-size: 14px;
+        color:#111827;
+      }
+      .raspaTxt small{
+        font-size: 12px;
+        color:#6b7280;
+        font-weight: 600;
+      }
+
+      .raspaAdd{
+        width: 86px;
+        height: 52px;
+        border-radius: 12px;
+        border: 1px solid #e5e7eb;
+        background:#fff;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        font-weight: 900;
+        font-size: 20px;
+        color:#111827;
+        flex: 0 0 auto;
       }
 
       .clienteSec {
@@ -432,7 +612,8 @@
           </div>
           <div class="faixaPreco">
             <small>Por apenas</small>
-            <span class="tagUnit" id="tagUnit">R$ 14,95</span>
+            <!-- ✅ AGORA: R$ 0,59 por número -->
+            <span class="tagUnit" id="tagUnit">R$ 0,59</span>
           </div>
         </div>
 
@@ -445,31 +626,68 @@
             <h2>Combos de números</h2>
           </div>
 
-          <!-- ✅ COMBOS ATUALIZADOS -->
+          <!-- ✅ COMBOS IGUAIS À REFERÊNCIA (valores/infos) -->
           <div class="combosGrid">
-            <button class="comboBtn on" data-combo-qtd="5">
-              <span class="comboTitulo">5 Números</span>
-              <span class="comboPrecoLinha">Por:
-                <span class="comboPrecoValor" data-combo-preco="5">R$ 14,95</span></span>
+            <button class="comboBtn" data-combo-qtd="33">
+              <span class="comboTitulo">33 Números</span>
+
+              <span class="comboBonus">
+                <span class="ico">$</span>
+                RECEBE +3 raspadinhas
+              </span>
+
+              <span class="comboPrecoLinha">
+                <span class="lbl">Por:</span>
+                <span class="comboPrecoValor" data-combo-preco="33">R$ 19,47</span>
+              </span>
             </button>
 
-            <button class="comboBtn" data-combo-qtd="10">
-              <span class="comboMaisVendido">Recomendado</span>
-              <span class="comboTitulo">10 Números</span>
-              <span class="comboPrecoLinha">Por:
-                <span class="comboPrecoValor" data-combo-preco="10">R$ 29,90</span></span>
+            <button class="comboBtn on" data-combo-qtd="66">
+              <span class="comboMaisVendido">Mais vendido</span>
+              <span class="comboTitulo">66 Números</span>
+
+              <span class="comboBonus">
+                <span class="ico">$</span>
+                RECEBE +6 raspadinhas
+              </span>
+
+              <span class="comboPrecoLinha">
+                <span class="lbl">Por:</span>
+                <span class="comboPrecoValor" data-combo-preco="66">R$ 38,94</span>
+              </span>
             </button>
 
-            <button class="comboBtn" data-combo-qtd="15">
-              <span class="comboTitulo">15 Números</span>
-              <span class="comboPrecoLinha">Por:
-                <span class="comboPrecoValor" data-combo-preco="15">R$ 44,85</span></span>
+            <button class="comboBtn" data-combo-qtd="100">
+              <span class="comboTitulo">100 Números</span>
+
+              <span class="comboBonus">
+                <span class="ico">$</span>
+                RECEBE +10 raspadinhas
+              </span>
+
+              <span class="comboPrecoLinha">
+                <span class="lbl">Por:</span>
+                <span class="comboPrecoValor" data-combo-preco="100">R$ 59,00</span>
+              </span>
             </button>
 
-            <button class="comboBtn" data-combo-qtd="20">
-              <span class="comboTitulo">20 Números</span>
-              <span class="comboPrecoLinha">Por:
-                <span class="comboPrecoValor" data-combo-preco="20">R$ 59,80</span></span>
+            <button class="comboBtn" data-combo-qtd="200">
+              <span class="comboTitulo">200 Números</span>
+
+              <span class="comboBonus">
+                <span class="ico">$</span>
+                RECEBE +20 raspadinhas
+              </span>
+
+              <span class="comboOldRow">
+                <span class="comboOld">De: <s>R$ 118,00</s></span>
+                <span class="comboOff">34% OFF</span>
+              </span>
+
+              <span class="comboPrecoLinha">
+                <span class="comboPorApenas">Por apenas:</span>
+                <span class="comboPrecoValor" data-combo-preco="200">R$ 78,00</span>
+              </span>
             </button>
           </div>
 
@@ -477,19 +695,55 @@
             <div class="lblQtd">Escolha a quantidade</div>
             <div class="stepper">
               <button class="btSq" id="menos">−</button>
-              <!-- ✅ MIN E DEFAULT = 5 -->
-              <input id="inpQtd" class="inpQtd" type="number" inputmode="numeric" value="5" min="5">
+              <!-- ✅ DEFAULT = 66 (igual foto) -->
+              <input id="inpQtd" class="inpQtd" type="number" inputmode="numeric" value="66" min="5">
               <button class="btSq" id="mais">+</button>
+            </div>
+          </div>
+
+          <!-- ✅ BLOCO “Raspadinha da Sorte” ABAIXO DOS COMBOS (igual referência) -->
+          <div class="raspaWrap">
+            <div class="raspaTitulo">
+              <div class="raspaFlag">$</div>
+              <h3>Raspadinha da Sorte</h3>
+            </div>
+
+            <div class="raspaCard">
+              <div class="raspaItem" data-add-qtd="10">
+                <div class="raspaPill"><span class="pillIco">$</span> Recebe 1 raspadinha</div>
+                <div class="raspaTxt">
+                  <b>A partir de <span style="font-weight:900;">10 números</span></b>
+                  <small>1 Chance de contemplação na Raspadinha</small>
+                </div>
+                <div class="raspaAdd">+10</div>
+              </div>
+
+              <div class="raspaItem" data-add-qtd="50">
+                <div class="raspaPill"><span class="pillIco">$</span> Recebe 5 raspadinhas</div>
+                <div class="raspaTxt">
+                  <b>A partir de <span style="font-weight:900;">50 números</span></b>
+                  <small>5 Chance de contemplação na Raspadinha</small>
+                </div>
+                <div class="raspaAdd">+50</div>
+              </div>
+
+              <div class="raspaItem" data-add-qtd="100">
+                <div class="raspaPill"><span class="pillIco">$</span> Recebe 10 raspadinhas</div>
+                <div class="raspaTxt">
+                  <b>A partir de <span style="font-weight:900;">100 números</span></b>
+                  <small>10 Chance de contemplação na Raspadinha</small>
+                </div>
+                <div class="raspaAdd">+100</div>
+              </div>
             </div>
           </div>
         </div>
 
         <div class="rodapeCardPc">
           <div class="resBox">
-            <!-- ✅ TEXTO INICIAL = 5 -->
-            <div class="resTxt" id="txtCotas">5 Números</div>
+            <div class="resTxt" id="txtCotas">66 Números</div>
             <div class="precos">
-              <div class="precoOld" id="txtValorOld">R$ 0,00</div>
+              <div class="precoOld" id="txtValorOld">R$ 118,00</div>
               <div class="precoNew" id="txtValor">R$ 0,00</div>
             </div>
           </div>
@@ -499,15 +753,13 @@
         <div class="rodapeCardMob">
           <div class="mobLinha">
             <div class="mobRes">
-              <!-- ✅ TEXTO INICIAL = 5 -->
-              <div class="mobTxt" id="txtCotasMob">5 Números</div>
+              <div class="mobTxt" id="txtCotasMob">66 Números</div>
               <div class="mobValor" id="txtValorMob">R$ 0,00</div>
             </div>
 
             <div class="mobStepper">
               <button class="mobBt" id="menosMob">−</button>
-              <!-- ✅ MIN E DEFAULT = 5 -->
-              <input id="inpQtdMob" class="mobInp" type="number" inputmode="numeric" value="5" min="5">
+              <input id="inpQtdMob" class="mobInp" type="number" inputmode="numeric" value="66" min="5">
               <button class="mobBt" id="maisMob">+</button>
             </div>
           </div>
@@ -547,6 +799,8 @@
       </div>
     </div>
 
+    <div class="toast" id="toast"></div>
+
     <script>
       function brl(v) {
         return "R$ " + Number(v).toFixed(2).replace(".", ",");
@@ -572,19 +826,34 @@
       const btnMinhas2 = document.getElementById("btnMinhas2");
       if (btnMinhas2) btnMinhas2.addEventListener("click", abrirMinhasCompras);
 
-      // ✅ NOVO: mínimo 5
+      function showToast(msg) {
+        const t = document.getElementById("toast");
+        if (!t) return;
+        t.textContent = msg;
+        t.classList.add("show");
+        clearTimeout(window.__toastTimer);
+        window.__toastTimer = setTimeout(() => t.classList.remove("show"), 1200);
+      }
+
+      // ✅ mantém seu mínimo (não mexi em variáveis/localStorage)
       let MIN_QTD = 5;
 
-      // ✅ preços fixos por quantidade (centavos)
+      // ✅ valor por número: R$ 0,59
+      const VALOR_UNIT_CENT = 59;
+
+      // ✅ combos da referência (centavos)
+      // 33 = 19,47  | 66 = 38,94 | 100 = 59,00 | 200 promo = 78,00 (old 118,00)
       const PRECO_POR_QTD_CENT = {
-        5: 1495,
-        10: 2990,
-        15: 4485,
-        20: 5980
+        33: 1947,
+        66: 3894,
+        100: 5900,
+        200: 7800
       };
 
-      // fallback unitário (mantém proporção do combo de 5: 14,95 / 5 = 2,99)
-      const VALOR_UNIT_CENT = 299;
+      // valor antigo do combo 200 (para exibir riscado)
+      const PRECO_OLD_POR_QTD_CENT = {
+        200: 11800
+      };
 
       const inp = document.getElementById("inpQtd");
       const menos = document.getElementById("menos");
@@ -604,6 +873,7 @@
       const comboButtons = document.querySelectorAll(".comboBtn");
       const comboPrecos = document.querySelectorAll("[data-combo-preco]");
 
+      // ✅ não mudo o nome da chave (só atualizo o valor conforme quantidade)
       localStorage.setItem("raspadinhas", "0");
 
       function totalCentavos(q) {
@@ -637,10 +907,22 @@
 
         txtCotas.textContent = q + " Números";
         txtValor.textContent = brl(cent / 100);
-        txtValorOldEl.style.display = "none";
 
+        // ✅ exibe preço antigo somente quando for 200 (igual referência)
+        if (q === 200) {
+          txtValorOldEl.style.display = "block";
+          txtValorOldEl.textContent = brl((PRECO_OLD_POR_QTD_CENT[200] || 0) / 100);
+        } else {
+          txtValorOldEl.style.display = "none";
+        }
+
+        // ✅ mantém suas chaves e lógica de persistência
         localStorage.setItem("cotas", String(q));
         localStorage.setItem("valor", String(cent));
+
+        // ✅ raspadinhas: proporcional (33→3, 66→6, 100→10, 200→20)
+        const rasp = Math.floor(q / 10);
+        localStorage.setItem("raspadinhas", String(rasp));
 
         sincronizarComboSelecionado(q);
 
@@ -651,13 +933,13 @@
 
       function carregarPreco() {
         const tagUnit = document.getElementById("tagUnit");
-        // “Por apenas” agora começa no mínimo (5 números)
-        if (tagUnit) tagUnit.textContent = brl(PRECO_POR_QTD_CENT[5] / 100);
+        // ✅ “Por apenas” agora é o valor unitário 0,59
+        if (tagUnit) tagUnit.textContent = brl(VALOR_UNIT_CENT / 100);
 
         atualizarCombos();
 
-        if (!inp.value || parseInt(inp.value, 10) < MIN_QTD) inp.value = MIN_QTD;
-        if (inpMob && (!inpMob.value || parseInt(inpMob.value, 10) < MIN_QTD)) inpMob.value = MIN_QTD;
+        if (!inp.value || parseInt(inp.value, 10) < MIN_QTD) inp.value = 66;
+        if (inpMob && (!inpMob.value || parseInt(inpMob.value, 10) < MIN_QTD)) inpMob.value = 66;
 
         atualizarResumo();
       }
@@ -717,6 +999,18 @@
           inp.value = qtd;
           if (inpMob) inpMob.value = qtd;
           atualizarResumo();
+        });
+      });
+
+      // ✅ clique na raspadinha: soma na quantidade
+      document.querySelectorAll(".raspaItem").forEach((el) => {
+        el.addEventListener("click", () => {
+          const add = parseInt(el.getAttribute("data-add-qtd") || "0", 10);
+          const atual = parseInt(inp.value || MIN_QTD, 10);
+          inp.value = Math.max(MIN_QTD, atual + add);
+          if (inpMob) inpMob.value = inp.value;
+          atualizarResumo();
+          showToast("Adicionado +" + add + " números");
         });
       });
 
