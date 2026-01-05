@@ -140,8 +140,8 @@ const PRECO_UNIT = 0.59;
 const DESCONTO_LIMITE = 200;
 const DESCONTO = 0.34;
 
-const UPS_VALOR = 9.98;
-const UPS_COTAS = 20;
+const UPS_VALOR = 9.98;     // ✅ upsell sempre soma R$9,98 quando marcado
+const UPS_COTAS = 20;       // ✅ +20 bilhetes na contagem, mas NÃO entra no cálculo 0,59
 
 /* ================= DADOS ================= */
 const cliente = JSON.parse(localStorage.getItem("cliente") || "{}");
@@ -154,24 +154,33 @@ document.getElementById("cpfBox").textContent = "CPF: " + (cliente.cpf || "");
 /* ================= FUNÇÕES ================= */
 function brl(v){ return "R$ " + Number(v).toFixed(2).replace(".", ","); }
 
-function calcularValor(qtd){
-  let total = qtd * PRECO_UNIT;
-  if (qtd > DESCONTO_LIMITE) total *= (1 - DESCONTO);
+/* Preço do produto base (somente cotasBase) com desconto se >200 */
+function calcularValorBase(qtdBase){
+  let total = qtdBase * PRECO_UNIT;
+  if (qtdBase > DESCONTO_LIMITE) total *= (1 - DESCONTO);
   return total;
 }
 
+/*
+  ✅ Correção:
+  - A contagem soma +20 bilhetes (visual/cliente.cotas)
+  - O valor soma +9,98 fixo
+  - Os +20 bilhetes NÃO são precificados a 0,59
+  - O desconto >200 aplica SOMENTE no base
+*/
 function atualizar(){
   const ups = document.getElementById("upsellCheck").checked;
 
-  const cotas = cotasBase + (ups ? UPS_COTAS : 0);
-  const totalCotas = calcularValor(cotas);
-  const totalFinal = totalCotas + (ups ? UPS_VALOR : 0);
+  const cotasExibidas = cotasBase + (ups ? UPS_COTAS : 0);
+
+  const totalBase = calcularValorBase(cotasBase);
+  const totalFinal = totalBase + (ups ? UPS_VALOR : 0);
 
   document.getElementById("valorTotal").textContent = brl(totalFinal);
-  document.getElementById("qtdCotas").textContent = String(cotas);
+  document.getElementById("qtdCotas").textContent = String(cotasExibidas);
 
   cliente.valor = totalFinal;
-  cliente.cotas = cotas;
+  cliente.cotas = cotasExibidas;
   localStorage.setItem("cliente", JSON.stringify(cliente));
 }
 
