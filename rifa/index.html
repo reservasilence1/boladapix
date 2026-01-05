@@ -4,7 +4,7 @@
     <meta charset="utf-8">
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" href="/rifa/images/logoboladapix.png" type="image/x-icon">
+    <link rel="shortcut icon" href="/rifa/images/logo.png" type="image/x-icon">
     <title>Bolada Pix</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800&display=swap" rel="stylesheet">
     <style>
@@ -28,7 +28,7 @@
         z-index: 20;
       }
 
-      header img { height: 75px; }
+      header img { height: 35px; }
 
       .btnTopo {
         display: inline-flex;
@@ -206,16 +206,21 @@
         box-shadow: 0 0 0 1px rgba(106,168,79,.35);
       }
 
+      /* ✅ LINHA "DE: R$118,00" + "34% OFF" SEM QUEBRAR NO MOBILE */
       .comboOldRow{
         display:flex;
         align-items:center;
-        gap:8px;
+        justify-content: space-between;
+        gap: 8px;
         margin-top: -2px;
+        flex-wrap: nowrap;
+        white-space: nowrap;
       }
       .comboOld {
         font-size: 12px;
         color: #6b7280;
         font-weight: 800;
+        flex: 0 0 auto;
       }
       .comboOld s { color:#6b7280; }
       .comboOff {
@@ -226,7 +231,19 @@
         border: 1px solid #bbf7d0;
         padding: 3px 8px;
         border-radius: 999px;
+        flex: 0 0 auto;
       }
+
+      /* ✅ reduz ainda mais no mobile pra nunca quebrar */
+      @media (max-width: 420px){
+        .comboOld{ font-size: 11px; }
+        .comboOff{ font-size: 10px; padding: 3px 7px; }
+      }
+      @media (max-width: 360px){
+        .comboOld{ font-size: 10px; }
+        .comboOff{ font-size: 9px; padding: 2px 6px; }
+      }
+
       .comboPorApenas{
         font-size: 12px;
         color: #166534;
@@ -501,7 +518,6 @@
       .mobRes { display: flex; flex-direction: column; gap: 2px; }
       .mobTxt { font-size: 12px; color: #111827; font-weight: 700; }
 
-      /* ✅ VALOR ANTIGO NO MOBILE (RISCADO VERMELHO ACIMA DO NOVO) */
       .mobValorOld{
         display: none;
         font-size: 12px;
@@ -747,7 +763,6 @@
           <div class="mobLinha">
             <div class="mobRes">
               <div class="mobTxt" id="txtCotasMob">66 Números</div>
-              <!-- ✅ VALOR ANTIGO NO MOBILE -->
               <div class="mobValorOld" id="txtValorOldMob">R$ 0,00</div>
               <div class="mobValor" id="txtValorMob">R$ 0,00</div>
             </div>
@@ -830,16 +845,11 @@
         window.__toastTimer = setTimeout(() => t.classList.remove("show"), 1200);
       }
 
-      // ✅ mantém seu mínimo (não mudei chaves nem nomes)
       let MIN_QTD = 5;
 
-      // ✅ preço cheio por número (mostrado na tag e usado como “preço antigo”)
       const VALOR_UNIT_CENT = 59;
-
-      // ✅ preço com desconto a partir de 200 (mesma “ideia” do combo 200: 78/200 = 0,39)
       const VALOR_UNIT_DESCONTO_200_CENT = 39;
 
-      // ✅ combos fixos da referência
       const PRECO_POR_QTD_CENT = {
         33: 1947,
         66: 3894,
@@ -847,7 +857,6 @@
         200: 7800
       };
 
-      // ✅ preço antigo riscado do 200 (referência)
       const PRECO_OLD_POR_QTD_CENT = {
         200: 11800
       };
@@ -862,7 +871,7 @@
       const txtCotasMob = document.getElementById("txtCotasMob");
       const txtValorMob = document.getElementById("txtValorMob");
       const btnComprarMob = document.getElementById("btnComprarMob");
-      const txtValorOldMob = document.getElementById("txtValorOldMob"); // ✅ NOVO
+      const txtValorOldMob = document.getElementById("txtValorOldMob");
 
       const txtCotas = document.getElementById("txtCotas");
       const txtValor = document.getElementById("txtValor");
@@ -871,24 +880,15 @@
       const comboButtons = document.querySelectorAll(".comboBtn");
       const comboPrecos = document.querySelectorAll("[data-combo-preco]");
 
-      // ✅ mantém a chave
       localStorage.setItem("raspadinhas", "0");
 
       function totalCentavos(q) {
-        // combos fixos
         if (PRECO_POR_QTD_CENT[q]) return PRECO_POR_QTD_CENT[q];
-
-        // ✅ acima de 200: mantém a “mesma ideia” do desconto
         if (q > 200) return q * VALOR_UNIT_DESCONTO_200_CENT;
-
-        // unitário cheio (0,59) para demais quantidades
         return q * VALOR_UNIT_CENT;
       }
 
       function oldCentavos(q) {
-        // ✅ preço antigo riscado:
-        // - 200: fixo 118,00
-        // - acima de 200: preço cheio por unidade (0,59) * q
         if (q === 200) return PRECO_OLD_POR_QTD_CENT[200];
         if (q > 200) return q * VALOR_UNIT_CENT;
         return 0;
@@ -921,32 +921,24 @@
         txtCotas.textContent = q + " Números";
         txtValor.textContent = brl(cent / 100);
 
-        // ✅ exibe preço antigo riscado a partir de 200 (PC + MOBILE)
         if (q >= 200) {
           const old = oldCentavos(q);
 
-          // PC
           txtValorOldEl.style.display = "block";
           txtValorOldEl.textContent = brl(old / 100);
 
-          // Mobile
           if (txtValorOldMob) {
             txtValorOldMob.style.display = "block";
             txtValorOldMob.textContent = brl(old / 100);
           }
         } else {
-          // PC
           txtValorOldEl.style.display = "none";
-
-          // Mobile
           if (txtValorOldMob) txtValorOldMob.style.display = "none";
         }
 
-        // ✅ mantém suas chaves de persistência (sem mudar nomes)
         localStorage.setItem("cotas", String(q));
         localStorage.setItem("valor", String(cent));
 
-        // raspadinhas: mantém a mesma regra (q/10)
         const rasp = Math.floor(q / 10);
         localStorage.setItem("raspadinhas", String(rasp));
 
@@ -1050,7 +1042,6 @@
       btnComprar.addEventListener("click", irParaPagamento);
       if (btnComprarMob) btnComprarMob.addEventListener("click", irParaPagamento);
 
-      // (restante do seu JS permanece igual – mantive como estava no seu código)
       const lista = document.getElementById("lista");
       const contagem = document.getElementById("contagem");
       const tabs = document.querySelectorAll(".tab");
