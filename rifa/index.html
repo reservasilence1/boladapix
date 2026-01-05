@@ -28,7 +28,7 @@
         z-index: 20;
       }
 
-      header img { height: 35px; }
+      header img { height: 75px; }
 
       .btnTopo {
         display: inline-flex;
@@ -500,6 +500,18 @@
 
       .mobRes { display: flex; flex-direction: column; gap: 2px; }
       .mobTxt { font-size: 12px; color: #111827; font-weight: 700; }
+
+      /* ✅ VALOR ANTIGO NO MOBILE (RISCADO VERMELHO ACIMA DO NOVO) */
+      .mobValorOld{
+        display: none;
+        font-size: 12px;
+        font-weight: 900;
+        color: #dc2626;
+        text-decoration: line-through;
+        line-height: 1;
+        margin-bottom: 2px;
+      }
+
       .mobValor { font-size: 16px; font-weight: 800; color: #111827; }
 
       .mobStepper { display: flex; align-items: center; gap: 6px; }
@@ -735,6 +747,8 @@
           <div class="mobLinha">
             <div class="mobRes">
               <div class="mobTxt" id="txtCotasMob">66 Números</div>
+              <!-- ✅ VALOR ANTIGO NO MOBILE -->
+              <div class="mobValorOld" id="txtValorOldMob">R$ 0,00</div>
               <div class="mobValor" id="txtValorMob">R$ 0,00</div>
             </div>
 
@@ -848,6 +862,7 @@
       const txtCotasMob = document.getElementById("txtCotasMob");
       const txtValorMob = document.getElementById("txtValorMob");
       const btnComprarMob = document.getElementById("btnComprarMob");
+      const txtValorOldMob = document.getElementById("txtValorOldMob"); // ✅ NOVO
 
       const txtCotas = document.getElementById("txtCotas");
       const txtValor = document.getElementById("txtValor");
@@ -864,7 +879,6 @@
         if (PRECO_POR_QTD_CENT[q]) return PRECO_POR_QTD_CENT[q];
 
         // ✅ acima de 200: mantém a “mesma ideia” do desconto
-        // (preço novo com desconto por unidade 0,39)
         if (q > 200) return q * VALOR_UNIT_DESCONTO_200_CENT;
 
         // unitário cheio (0,59) para demais quantidades
@@ -907,20 +921,32 @@
         txtCotas.textContent = q + " Números";
         txtValor.textContent = brl(cent / 100);
 
-        // ✅ exibe preço antigo riscado a partir de 200 (200 e >200)
+        // ✅ exibe preço antigo riscado a partir de 200 (PC + MOBILE)
         if (q >= 200) {
           const old = oldCentavos(q);
+
+          // PC
           txtValorOldEl.style.display = "block";
           txtValorOldEl.textContent = brl(old / 100);
+
+          // Mobile
+          if (txtValorOldMob) {
+            txtValorOldMob.style.display = "block";
+            txtValorOldMob.textContent = brl(old / 100);
+          }
         } else {
+          // PC
           txtValorOldEl.style.display = "none";
+
+          // Mobile
+          if (txtValorOldMob) txtValorOldMob.style.display = "none";
         }
 
         // ✅ mantém suas chaves de persistência (sem mudar nomes)
         localStorage.setItem("cotas", String(q));
         localStorage.setItem("valor", String(cent));
 
-        // raspadinhas: mantém a mesma regra que estava (q/10)
+        // raspadinhas: mantém a mesma regra (q/10)
         const rasp = Math.floor(q / 10);
         localStorage.setItem("raspadinhas", String(rasp));
 
