@@ -124,9 +124,13 @@ document.head.appendChild(a);
   </div>
 </div>
 
-  <div class="cookies"> Usamos cookies para melhorar a sua navegação. Ao usar nosso site você concorda com o uso de cookies descrito na nossa 
-    <a href="#" style="color:var(--verde);text-decoration:none">Política de Privacidade</a> </div> 
-  <div class="rodapeLogo"> <img src="/pagamento/images/logoboladapix.png" alt="Logo"> </div> </div> 
+<div class="cookies">
+  Usamos cookies para melhorar a sua navegação. Ao usar nosso site você concorda com o uso de cookies descrito na nossa
+  <a href="#" style="color:var(--verde);text-decoration:none">Política de Privacidade</a>
+</div>
+<div class="rodapeLogo">
+  <img src="/pagamento/images/logoboladapix.png" alt="Logo">
+</div>
 
 <div id="overlay" class="overlay"><div class="loader"></div></div>
 
@@ -135,47 +139,151 @@ document.head.appendChild(a);
 const PRECO_UNIT = 0.59;
 const DESCONTO_LIMITE = 200;
 const DESCONTO = 0.34;
-const UPS_VALOR = 9.98;
-const UPS_COTAS = 20;
+
+const UPS_VALOR = 9.98;     // valor EXTRA do upsell (sempre soma no total quando marcado)
+const UPS_COTAS = 20;       // bilhetes extra (continua somando na contagem)
 
 /* ================= DADOS ================= */
-const cliente = JSON.parse(localStorage.getItem("cliente")||"{}");
-let cotasBase = Number(localStorage.getItem("cotas")||0);
+const cliente = JSON.parse(localStorage.getItem("cliente") || "{}");
+let cotasBase = Number(localStorage.getItem("cotas") || 0);
 
 /* ================= UI ================= */
-nomeBox.textContent = cliente.nome || "";
-cpfBox.textContent = "CPF: " + cliente.cpf;
+document.getElementById("nomeBox").textContent = cliente.nome || "";
+document.getElementById("cpfBox").textContent = "CPF: " + (cliente.cpf || "");
 
 /* ================= FUNÇÕES ================= */
-function brl(v){return "R$ "+v.toFixed(2).replace(".",",");}
+function brl(v){ return "R$ " + Number(v).toFixed(2).replace(".", ","); }
 
+/* Valor base de cotas SEM upsell e COM regra de desconto >200 */
 function calcularValor(qtd){
   let total = qtd * PRECO_UNIT;
-  if(qtd > DESCONTO_LIMITE) total *= (1 - DESCONTO);
+  if (qtd > DESCONTO_LIMITE) total *= (1 - DESCONTO);
   return total;
 }
 
+/*
+  ✅ Ajuste pedido:
+  - O upsell fica "oculto" no sentido de NÃO receber desconto.
+  - Ou seja: primeiro calcula o total das cotas (com desconto se >200),
+    depois SOMA +9,98 fixo por fora quando marcar.
+*/
 function atualizar(){
-  const ups = upsellCheck.checked;
+  const ups = document.getElementById("upsellCheck").checked;
+
   const cotas = cotasBase + (ups ? UPS_COTAS : 0);
-  const total = calcularValor(cotas) + (ups ? UPS_VALOR : 0);
 
-  valorTotal.textContent = brl(total);
-  qtdCotas.textContent = cotas;
+  const totalCotas = calcularValor(cotas);           // preço do produto (com desconto se >200)
+  const totalFinal = totalCotas + (ups ? UPS_VALOR : 0); // ✅ upsell sempre soma R$9,98 "por fora"
 
-  cliente.valor = total;
+  document.getElementById("valorTotal").textContent = brl(totalFinal);
+  document.getElementById("qtdCotas").textContent = String(cotas);
+
+  // salva correto pra etapa do PIX
+  cliente.valor = totalFinal;
   cliente.cotas = cotas;
   localStorage.setItem("cliente", JSON.stringify(cliente));
 }
 
 atualizar();
-upsellCheck.onchange = atualizar;
+document.getElementById("upsellCheck").addEventListener("change", atualizar);
 
-trocar.onclick = e => {
+document.getElementById("trocar").addEventListener("click", (e) => {
   e.preventDefault();
   localStorage.removeItem("cliente");
-  location.href="index.html";
-};
+  location.href = "index.html";
+});
+
+/* ================== BOTÃO CONFIRMAR (mantém seu fluxo, só garante total correto) ================== */
+const btn = document.getElementById("confirmar");
+const overlay = document.getElementById("overlay");
+let travado = false;
+
+function paramsToObj() {
+  const p = new URLSearchParams(window.location.search);
+  const o = {};
+  p.forEach((v, k) => (o[k] = v));
+  return o;
+}
+
+function normalizePhoneBR(phone) {
+  const d = String(phone || "").replace(/\D/g, "");
+  if (!d) return "";
+  if (d.length >= 12 && d.startsWith("55")) return d;
+  if (d.length >= 10 && d.length <= 11) return "55" + d;
+  return d;
+}
+
+function buildUtmString(trackingObj) {
+  const keys = Object.keys(trackingObj || {});
+  const utmPairs = [];
+  for (const k of keys) {
+    if (/^utm_/i.test(k)) {
+      utmPairs.push(encodeURIComponent(k) + "=" + encodeURIComponent(String(trackingObj[k])));
+    }
+  }
+  return utmPairs.join("&");
+}
+
+btn.addEventListener("click", async () => {
+  if (travado) return;
+
+  // garante que o total salvo está atualizado
+  atualizar();
+
+  travado = true;
+  btn.disabled = true;
+  btn.classList.add("loading");
+  btn.querySelector(".t").textContent = "Gerando pagamento...";
+  overlay.classList.add("show");
+
+  try {
+    const tracking = paramsToObj();
+    const totalCent = Math.round((cliente.valor || 0) * 100);
+
+    const payload = {
+      amount: totalCent,
+      description: "Pagamento via Pix",
+      customer: {
+        name: cliente.nome,
+        document: String(cliente.cpf || "").replace(/\D/g, ""),
+        email: cliente.email,
+        phone: normalizePhoneBR(cliente.celular),
+      },
+      item: {
+        title: "Pedido - Bolada Pix",
+        price: totalCent,
+        quantity: 1,
+      },
+      paymentMethod: "PIX",
+      utm: buildUtmString(tracking),
+    };
+
+    const res = await fetch("/api/pix", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+
+    const j = await res.json();
+
+    const pixCode = j?.pix?.qrcode || j?.pixCode || j?.pixcode || j?.qrCode;
+
+    if (pixCode) {
+      localStorage.setItem("pix", JSON.stringify(j));
+      window.location.href = "/pagamento/payment.html" + window.location.search;
+    } else {
+      alert("Não foi possível gerar o PIX.");
+    }
+  } catch (e) {
+    alert("Erro ao gerar pagamento.");
+  } finally {
+    overlay.classList.remove("show");
+    btn.classList.remove("loading");
+    btn.querySelector(".t").textContent = "Confirmar compra";
+    btn.disabled = false;
+    travado = false;
+  }
+});
 </script>
 
 </body>
