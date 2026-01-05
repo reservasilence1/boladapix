@@ -1,4 +1,4 @@
-!DOCTYPE html><html lang="pt-BR"><head>
+<!DOCTYPE html><html lang="pt-BR"><head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Bolada Pix</title>
@@ -156,7 +156,15 @@
         <div class="loader"></div>
     </div>
 <script>
-  const VALOR_COTA_CENT = 299; // R$ 2,99 FIXO
+
+
+  const PRECO_UNIT_CENT = 59;            // R$0,59
+  const DESCONTO_LIMITE = 200;
+  const DESCONTO_PCT = 0.34;
+  const PRECO_UNIT_DESC_CENT = Math.round(PRECO_UNIT_CENT * (1 - DESCONTO_PCT)); // ~39 centavos
+
+  const UPS_VALOR_CENT = 998; // R$9,98
+  const UPS_COTAS = 20;
 
   function maskCpfDisplay(c) {
     const d = String(c).replace(/\D/g, "");
@@ -196,17 +204,34 @@
     return utmPairs.join("&");
   }
 
+  // ✅ cálculo do produto (sem upsell)
+  function totalProdutoCent(qtdCotas) {
+    const q = Math.max(0, Number(qtdCotas) || 0);
+    const unit = q > DESCONTO_LIMITE ? PRECO_UNIT_DESC_CENT : PRECO_UNIT_CENT;
+    return q * unit;
+  }
+
   const raw = localStorage.getItem("cliente");
   if (!raw) window.location.href = "index.html";
 
   let cliente = JSON.parse(raw || "{}");
 
-  const valorCentavos = Number(localStorage.getItem("valor") || 0);
-  const cotasCalculadas = Math.round(valorCentavos / VALOR_COTA_CENT);
+  // ✅ pega a quantidade REAL de cotas do funil
+  // (prioriza "cotas" salvo; se não existir, tenta "valor" antigo só como fallback)
+  const cotasSalvas = Number(localStorage.getItem("cotas") || 0);
 
-  cliente.valor = valorCentavos / 100;
-  cliente.cotas = cotasCalculadas;
+  // fallback só para não quebrar caso "cotas" esteja vazio
+  const valorCentavosFallback = Number(localStorage.getItem("valor") || 0);
+  const cotasFallback = cotasSalvas > 0 ? cotasSalvas : Math.round(valorCentavosFallback / PRECO_UNIT_CENT);
 
+  const cotasBase = Math.max(0, cotasFallback);
+
+  // ✅ valor base recalculado pela nova regra (0,59 / desconto >200)
+  const valorBaseCent = totalProdutoCent(cotasBase);
+
+  // salva base no cliente (sem upsell)
+  cliente.valor = valorBaseCent / 100;
+  cliente.cotas = cotasBase;
   localStorage.setItem("cliente", JSON.stringify(cliente));
 
   document.getElementById("nomeBox").textContent = cliente.nome || "";
@@ -217,21 +242,20 @@
   const qtdCotasEl = document.getElementById("qtdCotas");
   const upsellCheck = document.getElementById("upsellCheck");
 
-  const UPS_VALOR = 9.98;
-  const UPS_COTAS = 20;
-
-  let valorBase = cliente.valor;
-  let cotasBase = cotasCalculadas;
-
   function atualizarResumo() {
     const upsAtivo = upsellCheck.checked;
-    const total = valorBase + (upsAtivo ? UPS_VALOR : 0);
+
+    // contagem de cotas (mostra +20 quando upsell marcado)
     const cotasTotal = cotasBase + (upsAtivo ? UPS_COTAS : 0);
 
-    valorTotalEl.textContent = brl(total);
+    // ✅ total do produto é SEMPRE em cima das cotasBase (não inclui as 20 do upsell)
+    const totalCent = valorBaseCent + (upsAtivo ? UPS_VALOR_CENT : 0);
+
+    valorTotalEl.textContent = brl(totalCent / 100);
     qtdCotasEl.textContent = String(cotasTotal);
 
-    cliente.valor = total;
+    // salva pro PIX
+    cliente.valor = totalCent / 100;
     cliente.cotas = cotasTotal;
     localStorage.setItem("cliente", JSON.stringify(cliente));
   }
@@ -258,8 +282,11 @@
     overlay.classList.add("show");
 
     try {
+      // garante que o total está certinho antes de enviar
+      atualizarResumo();
+
       const tracking = paramsToObj();
-      const totalCent = Math.round(cliente.valor * 100);
+      const totalCent = Math.round((cliente.valor || 0) * 100);
 
       const payload = {
         amount: totalCent,
